@@ -3706,7 +3706,6 @@ GameObject:
   - component: {fileID: 885895409}
   - component: {fileID: 885895408}
   - component: {fileID: 885895407}
-  - component: {fileID: 885895406}
   m_Layer: 0
   m_Name: PlayerObj
   m_TagString: Untagged
@@ -3714,29 +3713,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &885895406
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 885895405}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &885895407
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5881,7 +5857,7 @@ GameObject:
   - component: {fileID: 1176919235}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6354,11 +6330,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5250f3dc0d39d3644bdca0306a7109e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterController: {fileID: 1491443761}
-  playerCamera: {fileID: 330585545}
-  runAcceleration: 0.25
+  _characterController: {fileID: 1491443761}
+  _playerCamera: {fileID: 330585545}
+  runAcceleration: 50
   runSpeed: 4
   drag: 30
+  lookSensH: 0.1
+  lookSensV: 0.1
+  lookLimitV: 89
 --- !u!114 &1491443760
 MonoBehaviour:
   m_ObjectHideFlags: 0

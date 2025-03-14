@@ -3,35 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(-1)]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private CharacterController characterController;
-    [SerializeField] private Camera playerCamera;
+    [SerializeField] private CharacterController _characterController;
+    [SerializeField] private Camera _playerCamera;
 
     public float runAcceleration = 0.25f;
     public float runSpeed = 4f;
     public float drag = 0.1f;
 
-    private PlayerLocomotionInput playerLocomotionInput;
+    public float lookSensH = 0.1f;
+    public float lookSensV = 0.1f;
+    public float lookLimitV = 89f;
+
+    private PlayerLocomotionInput _playerLocomotionInput;
+    private Vector2 _cameraRotation = Vector2.zero;
+    private Vector2 _playerTargetRotation = Vector2.zero;
 
     private void Awake()
     {
-        playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
+        _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
     }
 
     private void Update()
     {
-        Vector3 cameraForwardXZ = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z).normalized;
-        Vector3 cameraRightXZ = new Vector3(playerCamera.transform.right.x, 0f, playerCamera.transform.right.z).normalized;
-        Vector3 movementDirection = cameraRightXZ * playerLocomotionInput.MovementInput.x + cameraForwardXZ * playerLocomotionInput.MovementInput.y;
+        Vector3 cameraForwardXZ = new Vector3(_playerCamera.transform.forward.x, 0f, _playerCamera.transform.forward.z).normalized;
+        Vector3 cameraRightXZ = new Vector3(_playerCamera.transform.right.x, 0f, _playerCamera.transform.right.z).normalized;
+        Vector3 movementDirection = cameraRightXZ * _playerLocomotionInput.MovementInput.x + cameraForwardXZ * _playerLocomotionInput.MovementInput.y;
 
         Vector3 movementDelta = movementDirection * runAcceleration * Time.deltaTime;
-        Vector3 newVelocity = characterController.velocity + movementDelta;
-
+        Vector3 newVelocity = _characterController.velocity + movementDelta;
+        
         Vector3 currentDrag = newVelocity.normalized * drag * Time.deltaTime;
         newVelocity = (newVelocity.magnitude > drag * Time.deltaTime) ? newVelocity - currentDrag : Vector3.zero;
         newVelocity = Vector3.ClampMagnitude(newVelocity, runSpeed);
-        
-        characterController.Move(newVelocity * Time.deltaTime);
+
+        _characterController.Move(newVelocity * Time.deltaTime);
+    }
+
+    private void LateUpdate()
+    {
+        _cameraRotation.x += lookSensH * _playerLocomotionInput.LookInput.x;
+        _cameraRotation.y = Mathf.Clamp(_cameraRotation.y - lookSensV * _playerLocomotionInput.LookInput.y, -lookLimitV, lookLimitV);
+
+        _playerTargetRotation.x += transform.eulerAngles.x + lookSensH * _playerLocomotionInput.LookInput.x;
+        transform.rotation = Quaternion.Euler(0f, _playerTargetRotation.x, 0f);
+
+        _playerCamera.transform.rotation = Quaternion.Euler(_cameraRotation.y, _cameraRotation.x, 0f);
     }
 }
