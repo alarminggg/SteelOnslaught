@@ -26,21 +26,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""PlayerLocomotionMap"",
-            ""id"": ""228634e0-a173-4a85-9f47-6589ddb4f98e"",
+            ""id"": ""508f4bea-7d4c-4d7b-abc5-e7e38d71cc32"",
             ""actions"": [
                 {
                     ""name"": ""Movement"",
                     ""type"": ""Value"",
-                    ""id"": ""99a3f02b-54e5-4c8a-b0aa-33ed28b34de2"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""fc49b03e-4918-4fef-9dab-0ed5a12b29a6"",
+                    ""id"": ""de83186a-f623-46a1-9286-588b852d46ba"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -50,7 +41,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": ""WASD"",
-                    ""id"": ""175be97b-df5e-403b-8a4e-92ea73ec9ac4"",
+                    ""id"": ""333ac35b-503c-446f-8463-889c76fd7960"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -61,7 +52,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""dafc25d1-c216-43bb-b0dd-a2fc04dff648"",
+                    ""id"": ""d7e59796-30c6-4dd7-8698-ee3a88c49784"",
                     ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -72,7 +63,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""4d54a584-d58f-4755-b8e6-c0597a8dd554"",
+                    ""id"": ""26a00243-5207-4ddd-82a7-1c4720f7f4fe"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -83,7 +74,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""fe5e99ad-03cb-487f-a34e-65189169bb6d"",
+                    ""id"": ""a64956bf-ae0e-47b5-aac4-9fe72c79f743"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -94,7 +85,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""eb6ecb3f-c836-40d5-8b25-fa6560429e8f"",
+                    ""id"": ""c1f32248-3b42-463e-b0e8-ce87d8d43677"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -105,7 +96,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Left Stick"",
-                    ""id"": ""6745b252-6747-4961-99c8-3d2c88f2b99a"",
+                    ""id"": ""63453e7b-6c41-4542-a42b-464400a710b1"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -116,7 +107,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""up"",
-                    ""id"": ""30a9e410-5c5a-42f7-abbd-975b2e7e7b71"",
+                    ""id"": ""cba95f15-11c2-4bf6-bb6f-0bfa26806889"",
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -127,7 +118,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""down"",
-                    ""id"": ""c5ef7cf5-abc2-4c03-a6d5-52b84b01a66f"",
+                    ""id"": ""875396b4-a066-427c-89d5-2815b40c2f6c"",
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -138,7 +129,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""left"",
-                    ""id"": ""d7d46e07-21f6-4543-a2f2-b3a87ad68f90"",
+                    ""id"": ""ca15c739-c330-4a55-88d6-5b6fe3f8b117"",
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -149,7 +140,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""right"",
-                    ""id"": ""104f5b8c-6a64-43a0-85ca-b1c386f5ceee"",
+                    ""id"": ""32def7a3-8214-462c-87a6-188b8e1c0460"",
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -157,17 +148,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f1ba715d-16a1-4747-8dea-4e1707306cdf"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -177,7 +157,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // PlayerLocomotionMap
         m_PlayerLocomotionMap = asset.FindActionMap("PlayerLocomotionMap", throwIfNotFound: true);
         m_PlayerLocomotionMap_Movement = m_PlayerLocomotionMap.FindAction("Movement", throwIfNotFound: true);
-        m_PlayerLocomotionMap_Look = m_PlayerLocomotionMap.FindAction("Look", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -245,13 +224,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerLocomotionMap;
     private List<IPlayerLocomotionMapActions> m_PlayerLocomotionMapActionsCallbackInterfaces = new List<IPlayerLocomotionMapActions>();
     private readonly InputAction m_PlayerLocomotionMap_Movement;
-    private readonly InputAction m_PlayerLocomotionMap_Look;
     public struct PlayerLocomotionMapActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerLocomotionMapActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Movement => m_Wrapper.m_PlayerLocomotionMap_Movement;
-        public InputAction @Look => m_Wrapper.m_PlayerLocomotionMap_Look;
         public InputActionMap Get() { return m_Wrapper.m_PlayerLocomotionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -264,9 +241,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
-            @Look.started += instance.OnLook;
-            @Look.performed += instance.OnLook;
-            @Look.canceled += instance.OnLook;
         }
 
         private void UnregisterCallbacks(IPlayerLocomotionMapActions instance)
@@ -274,9 +248,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
             @Movement.canceled -= instance.OnMovement;
-            @Look.started -= instance.OnLook;
-            @Look.performed -= instance.OnLook;
-            @Look.canceled -= instance.OnLook;
         }
 
         public void RemoveCallbacks(IPlayerLocomotionMapActions instance)
@@ -297,6 +268,5 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IPlayerLocomotionMapActions
     {
         void OnMovement(InputAction.CallbackContext context);
-        void OnLook(InputAction.CallbackContext context);
     }
 }
