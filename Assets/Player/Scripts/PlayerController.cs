@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private CharacterController _characterController;
-    [SerializeField] private Camera _playerCamera;
+    public Camera _playerCamera;
 
     public float runAcceleration = 0.25f;
     public float runSpeed = 4f;
@@ -30,10 +30,14 @@ public class PlayerController : MonoBehaviour
     private Vector2 _cameraRotation = Vector2.zero;
     private Vector2 _playerTargetRotation = Vector2.zero;
 
+    private Vector3 targetRecoil = Vector3.zero;
+    private Vector3 currentRecoil = Vector3.zero;
+
     private float verticalVelocity = 0f;
 
     private void Awake()
     {
+        Cursor.visible = false;
         _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
     }
 
@@ -85,11 +89,27 @@ public class PlayerController : MonoBehaviour
         _playerTargetRotation.x += transform.eulerAngles.x + lookSensH * _playerLocomotionInput.LookInput.x;
         transform.rotation = Quaternion.Euler(0f, _playerTargetRotation.x, 0f);
 
-        _playerCamera.transform.rotation = Quaternion.Euler(_cameraRotation.y, _cameraRotation.x, 0f);
+        _playerCamera.transform.rotation = Quaternion.Euler(_cameraRotation.y + currentRecoil.y, _cameraRotation.x + currentRecoil.x, 0f);
     }
 
     private bool IsGrounded()
     {
         return _characterController.isGrounded;
+    }
+
+    public void ApplyRecoil(GunData gunData)
+    {
+        float recoilX = Random.Range(-gunData.maxRecoil.x, gunData.maxRecoil.x) * gunData.recoilAmount;
+        float recoilY = Random.Range(-gunData.maxRecoil.y, gunData.maxRecoil.y) * gunData.recoilAmount;
+
+        targetRecoil += new Vector3(recoilX, recoilY, 0);
+
+        currentRecoil = Vector3.MoveTowards(currentRecoil, targetRecoil, Time.deltaTime * gunData.recoilSpeed);
+    }
+
+    public void ResetRecoil(GunData gunData)
+    {
+        currentRecoil = Vector3.MoveTowards(currentRecoil, Vector3.zero, Time.deltaTime * gunData.resetRecoilSpeed);
+        targetRecoil = Vector3.MoveTowards(targetRecoil, Vector3.zero, Time.deltaTime * gunData.resetRecoilSpeed);
     }
 }
