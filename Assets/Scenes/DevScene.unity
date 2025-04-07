@@ -27123,7 +27123,8 @@ MonoBehaviour:
   _playerCamera: {fileID: 330585545}
   runAcceleration: 35
   runSpeed: 4
-  drag: 15
+  drag: 5
+  inAirDrag: 5
   sprintAcceleration: 50
   sprintSpeed: 7
   gravity: 25

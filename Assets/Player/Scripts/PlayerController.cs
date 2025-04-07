@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float runSpeed = 4f;
 
     public float drag = 0.1f;
+    public float inAirDrag = 5f;
 
     public float sprintAcceleration = 0.5f;
     public float sprintSpeed = 7f;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public float lookSensV = 0.1f;
     public float lookLimitV = 89f;
 
+    private Vector3 _currentVelocity = Vector3.zero;
     private PlayerLocomotionInput _playerLocomotionInput;
     private Vector2 _cameraRotation = Vector2.zero;
     private Vector2 _playerTargetRotation = Vector2.zero;
@@ -46,7 +48,7 @@ public class PlayerController : MonoBehaviour
 
         if(_playerLocomotionInput.JumpPressed && isGrounded )
         {
-            verticalVelocity += Mathf.Sqrt(jumpSpeed * 3 * gravity);
+            verticalVelocity = Mathf.Sqrt(jumpSpeed * 3 * gravity);
         }
 
         //sprinting
@@ -58,15 +60,21 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraRightXZ = new Vector3(_playerCamera.transform.right.x, 0f, _playerCamera.transform.right.z).normalized;
         Vector3 movementDirection = cameraRightXZ * _playerLocomotionInput.MovementInput.x + cameraForwardXZ * _playerLocomotionInput.MovementInput.y;
 
-        Vector3 movementDelta = movementDirection * lateralAcceleration * Time.deltaTime;
-        Vector3 newVelocity = _characterController.velocity + movementDelta;
+        Vector3 movementDelta = movementDirection * lateralAcceleration;
+        _currentVelocity.x += movementDelta.x * Time.deltaTime;
+        _currentVelocity.z += movementDelta.z * Time.deltaTime;
         
-        Vector3 currentDrag = newVelocity.normalized * drag * Time.deltaTime;
-        newVelocity = (newVelocity.magnitude > drag * Time.deltaTime) ? newVelocity - currentDrag : Vector3.zero;
-        newVelocity = Vector3.ClampMagnitude(newVelocity, clampLateralMagnitude);
-        newVelocity.y = verticalVelocity;
 
-        _characterController.Move(newVelocity * Time.deltaTime);
+        float dragMagnitude = isGrounded ? drag : inAirDrag;
+        Vector3 horizontalVelocity = new Vector3(_currentVelocity.x,0f,_currentVelocity.z);
+        Vector3 dragVector = horizontalVelocity * dragMagnitude * Time.deltaTime;
+        horizontalVelocity = (horizontalVelocity.magnitude > dragMagnitude * Time.deltaTime) ? horizontalVelocity - dragVector : Vector3.zero;
+
+        horizontalVelocity = Vector3.ClampMagnitude(horizontalVelocity, clampLateralMagnitude);
+
+        _currentVelocity = new Vector3(horizontalVelocity.x, verticalVelocity, horizontalVelocity.z);
+
+        _characterController.Move(_currentVelocity * Time.deltaTime);
     }
 
     private void LateUpdate()
