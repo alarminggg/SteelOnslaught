@@ -2,18 +2,18 @@ using System.Collections;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 
-public class Pistol : Gun
+public class AssaultRifle : Gun
 {
     public override void Update()
     {
         base.Update();
 
-        if(Input.GetButton("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             TryShoot();
         }
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             TryReload();
         }
@@ -28,7 +28,7 @@ public class Pistol : Gun
 
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, gunData.shootingRange, gunData.targetLayerMask))
         {
-            Debug.Log(gunData.gunName + " hit" +hit.collider.name);
+            Debug.Log(gunData.gunName + " hit" + hit.collider.name);
             Debug.DrawLine(origin, hit.point, Color.red, 1f);
             target = hit.point;
         }
@@ -40,13 +40,11 @@ public class Pistol : Gun
         StartCoroutine(BulletFire(target, hit));
     }
 
-    
-
     private IEnumerator BulletFire(Vector3 target, RaycastHit hit)
     {
         GameObject bulletTrail = Instantiate(gunData.bulletTrailPrefab, gunMuzzle.position, Quaternion.identity);
 
-        while(bulletTrail != null && Vector3.Distance(bulletTrail.transform.position, target) > 0.1f)
+        while (bulletTrail != null && Vector3.Distance(bulletTrail.transform.position, target) > 0.1f)
         {
             bulletTrail.transform.position = Vector3.MoveTowards(bulletTrail.transform.position, target, Time.deltaTime * gunData.bulletSpeed);
             yield return null;

@@ -96,7 +96,8 @@ public class PlayerController : MonoBehaviour
     {
         return _characterController.isGrounded;
     }
-
+    
+    
     public void ApplyRecoil(GunData gunData)
     {
         float recoilX = Random.Range(-gunData.maxRecoil.x, gunData.maxRecoil.x) * gunData.recoilAmount;
@@ -112,4 +113,5 @@ public class PlayerController : MonoBehaviour
         currentRecoil = Vector3.MoveTowards(currentRecoil, Vector3.zero, Time.deltaTime * gunData.resetRecoilSpeed);
         targetRecoil = Vector3.MoveTowards(targetRecoil, Vector3.zero, Time.deltaTime * gunData.resetRecoilSpeed);
     }
+    
 }

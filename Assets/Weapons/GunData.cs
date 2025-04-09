@@ -24,4 +24,7 @@ public class GunData : ScriptableObject
     [Header("VFX")]
     public GameObject bulletTrailPrefab;
     public float bulletSpeed;
+
+    [Header("Damage")]
+    public int damage;
 }
