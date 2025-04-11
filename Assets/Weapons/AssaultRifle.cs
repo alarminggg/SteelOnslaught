@@ -1,21 +1,76 @@
 using System.Collections;
 using UnityEngine;
 using static UnityEngine.UI.Image;
+using UnityEngine.InputSystem;
+using UnityEditor.Rendering.LookDev;
+using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class AssaultRifle : Gun
 {
+
+    public InputAction shootAction;
+    public InputAction reloadAction;
+
+    private void Awake()
+    {
+        var input = FindAnyObjectByType<PlayerLocomotionInput>();
+        if (input != null)
+        {
+            shootAction = input.PlayerControls.PlayerLocomotionMap.Shoot;
+            reloadAction = input.PlayerControls.PlayerLocomotionMap.Reload;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (shootAction != null && reloadAction != null)
+        {
+            shootAction.Enable();
+            reloadAction.Enable();
+
+            shootAction.performed += OnShoot;
+            reloadAction.performed += OnReload;
+        }
+        else
+        {
+            Debug.LogWarning("Shoot or Reload action not assigned!");
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (shootAction != null && reloadAction != null)
+        {
+            shootAction.performed -= OnShoot;
+            reloadAction.performed -= OnReload;
+
+            shootAction.Disable();
+            reloadAction.Disable();
+        }
+    }
+
+    private void OnShoot(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            TryShoot();
+        }
+    }
+    private void OnReload(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            TryReload();
+        }
+    }
+
     public override void Update()
     {
         base.Update();
 
-        if (Input.GetButton("Fire1"))
+        if(shootAction != null && shootAction.ReadValue<float>() > 0f)
         {
             TryShoot();
-        }
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            TryReload();
         }
     }
     public override void Shoot()
@@ -34,7 +89,7 @@ public class AssaultRifle : Gun
         }
         else
         {
-            target = cameraTransform.position * gunData.shootingRange;
+            target = cameraTransform.position + cameraTransform.forward * gunData.shootingRange;
         }
 
         StartCoroutine(BulletFire(target, hit));

@@ -27816,6 +27816,24 @@ MonoBehaviour:
   bulletHitParticlePrefab: {fileID: 2919775981113757938, guid: eb8dabbf358daf941acefaf96daa8378, type: 3}
   currentAmmo: 0
   isReloading: 0
+  shootAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 055ad593-1592-424a-be4f-a2ec57ff4bcf
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  reloadAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fe7008ac-d84e-41cb-a875-dc0bed049838
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &1423036756
 GameObject:
   m_ObjectHideFlags: 0
@@ -28512,17 +28530,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterController: {fileID: 1491443761}
   _playerCamera: {fileID: 330585545}
-  runAcceleration: 35
-  runSpeed: 4
   drag: 5
   inAirDrag: 5
-  sprintAcceleration: 50
-  sprintSpeed: 7
   gravity: 25
   jumpSpeed: 1
+  sprintAcceleration: 50
+  sprintSpeed: 7
+  runAcceleration: 35
+  runSpeed: 4
   lookSensH: 0.1
   lookSensV: 0.1
   lookLimitV: 89
+  controllerLookSensH: 0.8
+  controllerLookSensV: 0.5
 --- !u!114 &1491443760
 MonoBehaviour:
   m_ObjectHideFlags: 0

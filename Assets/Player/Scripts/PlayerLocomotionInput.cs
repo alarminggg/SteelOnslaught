@@ -12,6 +12,8 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
     public Vector2 MovementInput {  get; private set; }
     public Vector2 LookInput { get; private set; }
     public bool JumpPressed { get; private set; }
+    public bool ShootPressed { get; private set; }
+    public bool ReloadPressed { get; private set; }
 
     private void OnEnable()
     {
@@ -31,6 +33,8 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
     private void LateUpdate()
     {
         JumpPressed = false;
+        ShootPressed = false;
+        ReloadPressed = false;
     }
 
     public void OnMovement(InputAction.CallbackContext context)
@@ -60,5 +64,23 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
         if(!context.performed)
             return;
         JumpPressed = true;
+    }
+
+    public void OnShoot(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ShootPressed = true;
+
+        }
+    }
+
+    public void OnReload(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            ReloadPressed = true;
+
+        }
     }
 }

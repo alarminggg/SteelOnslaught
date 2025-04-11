@@ -9,21 +9,30 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController _characterController;
     public Camera _playerCamera;
 
-    public float runAcceleration = 0.25f;
-    public float runSpeed = 4f;
-
+    [Header("Environment Logic")]
     public float drag = 0.1f;
     public float inAirDrag = 5f;
-
-    public float sprintAcceleration = 0.5f;
-    public float sprintSpeed = 7f;
-
     public float gravity = 25f;
     public float jumpSpeed = 1.0f;
 
+    [Header("Sprint Logic")]
+    public float sprintAcceleration = 0.5f;
+    public float sprintSpeed = 7f;
+
+    [Header("Move Logic")]
+    public float runAcceleration = 0.25f;
+    public float runSpeed = 4f;
+
+    [Header("Mouse Sens")]
     public float lookSensH = 0.1f;
     public float lookSensV = 0.1f;
+
+    [Header("Look Limit")]
     public float lookLimitV = 89f;
+
+    [Header("Controller Sens")]
+    public float controllerLookSensH = 0.1f;
+    public float controllerLookSensV = 0.1f;
 
     private Vector3 _currentVelocity = Vector3.zero;
     private PlayerLocomotionInput _playerLocomotionInput;
@@ -83,9 +92,21 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        _cameraRotation.x += lookSensH * _playerLocomotionInput.LookInput.x;
-        _cameraRotation.y = Mathf.Clamp(_cameraRotation.y - lookSensV * _playerLocomotionInput.LookInput.y, -lookLimitV, lookLimitV);
-
+        if (_playerLocomotionInput.LookInput != Vector2.zero)
+        {
+            if(Gamepad.current != null)
+            {
+                _cameraRotation.x += controllerLookSensH * _playerLocomotionInput.LookInput.x;
+                _cameraRotation.y = Mathf.Clamp(_cameraRotation.y - controllerLookSensV * _playerLocomotionInput.LookInput.y, -lookLimitV, lookLimitV);
+            }
+            else
+            {
+                _cameraRotation.x += lookSensH * _playerLocomotionInput.LookInput.x;
+                _cameraRotation.y = Mathf.Clamp(_cameraRotation.y - lookSensV * _playerLocomotionInput.LookInput.y, -lookLimitV, lookLimitV);
+            }
+            
+        }
+   
         _playerTargetRotation.x += transform.eulerAngles.x + lookSensH * _playerLocomotionInput.LookInput.x;
         transform.rotation = Quaternion.Euler(0f, _playerTargetRotation.x, 0f);
 
