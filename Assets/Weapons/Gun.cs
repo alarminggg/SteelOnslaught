@@ -12,10 +12,11 @@ public abstract class Gun : MonoBehaviour
     public GameObject bulletHolePrefab;
     public GameObject bulletHitParticlePrefab;
 
-    private float currentAmmo = 0f;
+    public float currentAmmo = 0f;
     private float nextTimeToFire = 0f;
 
-    private bool isReloading = false;
+    public bool isReloading = false;
+    public float MagazineSize => gunData != null ? gunData.magazineSize : 0f;
 
     private void Start()
     {
