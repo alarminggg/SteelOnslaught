@@ -51,7 +51,8 @@ public class AssaultRifle : Gun
 
     private void OnShoot(InputAction.CallbackContext context)
     {
-        if(context.performed)
+
+        if (context.performed)
         {
             TryShoot();
         }

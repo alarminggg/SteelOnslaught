@@ -692,6 +692,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  attackRange: 2
+  damage: 20
+  attackCooldown: 1.5
 --- !u!195 &1446519077215506633
 NavMeshAgent:
   m_ObjectHideFlags: 0

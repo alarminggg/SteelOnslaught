@@ -4,9 +4,21 @@ public class EnemyHealth : MonoBehaviour
 {
     public int health = 100;
 
+    public HealthBar healthBar;
+
+
+    private void Start()
+    {
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(health);
+        }
+    }
     public void TakeDamage(int damage)
     {
         health -= damage;
+
+        healthBar.setHealth(health);
 
         if (health <= 0)
         {

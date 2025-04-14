@@ -5,6 +5,11 @@ public class EnemyMovement : MonoBehaviour
 {
     private NavMeshAgent agent = null;
     [SerializeField] private Transform target;
+    [SerializeField] public float attackRange = 2f;
+    [SerializeField] public float damage = 20f;
+    [SerializeField] public float attackCooldown = 1.5f;
+
+    private float lastAttackTime = 0f;
 
     private void Start()
     {
@@ -15,12 +20,15 @@ public class EnemyMovement : MonoBehaviour
     {
         MoveToTarget();
         LookAtTarget();
+        TryAttackPlayer();
     }
 
     private void MoveToTarget()
     {
-        agent.SetDestination(target.position);
-        
+        if (target != null)
+        {
+            agent.SetDestination(target.position);
+        }
     }
 
     private void LookAtTarget()
@@ -36,6 +44,25 @@ public class EnemyMovement : MonoBehaviour
 
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        }
+    }
+
+    private void TryAttackPlayer()
+    {
+        if (target == null)
+        return;
+
+        float distance = Vector3.Distance(transform.position, target.position);
+
+        if(distance <= attackRange && Time.time > lastAttackTime + attackCooldown)
+        {
+            PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damage);
+                lastAttackTime = Time.time;
+                Debug.Log("Enemy Hit the Player!");
+            }
         }
     }
 
