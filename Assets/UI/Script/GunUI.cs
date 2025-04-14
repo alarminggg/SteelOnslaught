@@ -9,6 +9,11 @@ public class GunUI : MonoBehaviour
     
     void Update()
     {
+        if(PauseMenu.GameIsPaused)
+        {
+            reloadNotifText.gameObject.SetActive(false);
+            return;
+        }
         if (currentGun != null)
         {
             if (currentGun.isReloading)

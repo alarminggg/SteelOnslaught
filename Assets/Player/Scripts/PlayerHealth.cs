@@ -12,6 +12,8 @@ public class PlayerHealth : MonoBehaviour
 
     public HealthBar healthBar;
 
+    private PauseMenu pauseMenu;
+
     
     private void Start()
     {
@@ -20,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
 
         healthBar.SetMaxHealth(maxHealth);
 
+        pauseMenu = FindAnyObjectByType<PauseMenu>();
     }
 
     private void Update()
@@ -66,6 +69,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnDeath()
     {
+        pauseMenu.TriggerDeath();
         Debug.Log("Player is Dead!");
     }
 }

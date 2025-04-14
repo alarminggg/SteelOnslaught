@@ -5,6 +5,10 @@ public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
     public GameObject pauseMenuUI;
+    public GameObject deathMenuUI;
+
+    public GameObject inGameUI;
+
 
     private PlayerLocomotionInput playerLocomotionInput;
     private PlayerController playerController;
@@ -42,7 +46,12 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        EnablePlayerInputs();  
+        EnablePlayerInputs();
+
+        if (inGameUI != null)
+        {
+            inGameUI.SetActive(true);
+        }
     }
 
     void Pause()
@@ -53,13 +62,29 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        DisablePlayerInputs();  
+        DisablePlayerInputs();
+
+        if (inGameUI != null)
+        {
+            inGameUI.SetActive(false);
+        }
     }
 
     public void LoadMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
+
+        if (inGameUI != null)
+        {
+            inGameUI.SetActive(true);
+        }
+    }
+
+    public void StartGame()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("DevScene");
     }
 
     public void QuitGame()
@@ -103,5 +128,27 @@ public class PauseMenu : MonoBehaviour
         {
             playerGun.enabled = true;  
         }
+    }
+
+    public void TriggerDeath()
+    {
+        Time.timeScale = 0f;
+        GameIsPaused = true;
+
+        deathMenuUI.SetActive(true);
+
+        pauseMenuUI.SetActive(false);
+
+        if (inGameUI != null)
+        {
+            inGameUI.SetActive(false);
+        }
+
+        DisablePlayerInputs();
+
+        
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
