@@ -90,6 +90,14 @@ public class PauseMenu : MonoBehaviour
 
     }
 
+    public void RestartHTP()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("TutorialScene");
+
+        Resume();
+    }
+
     public void QuitGame()
     {
         Application.Quit();
