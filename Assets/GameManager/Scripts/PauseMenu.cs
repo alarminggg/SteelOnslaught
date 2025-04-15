@@ -7,8 +7,9 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject deathMenuUI;
 
-    public GameObject inGameUI;
+    public GameObject InGameUI;
 
+    private bool isDead = false;
 
     private PlayerLocomotionInput playerLocomotionInput;
     private PlayerController playerController;
@@ -25,17 +26,21 @@ public class PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.P))
+        if(isDead) return;
         {
-            if (GameIsPaused)
+            if (Input.GetKeyUp(KeyCode.P))
             {
-                Resume();
-            }
-            else
-            {
-                Pause();
+                if (GameIsPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
             }
         }
+        
     }
 
     public void Resume()
@@ -48,9 +53,9 @@ public class PauseMenu : MonoBehaviour
 
         EnablePlayerInputs();
 
-        if (inGameUI != null)
+        if (InGameUI != null)
         {
-            inGameUI.SetActive(true);
+            InGameUI.SetActive(true);
         }
     }
 
@@ -64,9 +69,9 @@ public class PauseMenu : MonoBehaviour
 
         DisablePlayerInputs();
 
-        if (inGameUI != null)
+        if (InGameUI != null)
         {
-            inGameUI.SetActive(false);
+            InGameUI.SetActive(false);
         }
     }
 
@@ -74,17 +79,15 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
-
-        if (inGameUI != null)
-        {
-            inGameUI.SetActive(true);
-        }
     }
 
     public void StartGame()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("DevScene");
+
+        Resume();
+
     }
 
     public void QuitGame()
@@ -134,19 +137,18 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 0f;
         GameIsPaused = true;
+        isDead = true;
 
         deathMenuUI.SetActive(true);
 
         pauseMenuUI.SetActive(false);
 
-        if (inGameUI != null)
-        {
-            inGameUI.SetActive(false);
+        if (InGameUI != null)
+        {   
+            InGameUI.SetActive(false);
         }
 
         DisablePlayerInputs();
-
-        
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

@@ -4,7 +4,7 @@ using UnityEngine.AI;
 public class EnemyMovement : MonoBehaviour
 {
     private NavMeshAgent agent = null;
-    [SerializeField] private Transform target;
+    [SerializeField] public Transform target;
     [SerializeField] public float attackRange = 2f;
     [SerializeField] public float damage = 20f;
     [SerializeField] public float attackCooldown = 1.5f;
@@ -69,5 +69,15 @@ public class EnemyMovement : MonoBehaviour
     private void GetReference()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        if (target == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                target = playerObj.transform;
+            }
+            
+        }
     }
 }

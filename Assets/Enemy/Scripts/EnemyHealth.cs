@@ -5,10 +5,12 @@ public class EnemyHealth : MonoBehaviour
     public int health = 100;
 
     public HealthBar healthBar;
+    public Spawner spawner;
 
 
     private void Start()
     {
+
         if (healthBar != null)
         {
             healthBar.SetMaxHealth(health);
@@ -30,5 +32,6 @@ public class EnemyHealth : MonoBehaviour
     {
         Debug.Log("Enemy has died");
         Destroy(gameObject);
+        spawner.enemiesKilled++;
     }
 }

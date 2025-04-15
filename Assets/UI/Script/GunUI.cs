@@ -6,7 +6,15 @@ public class GunUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ammoText;
     [SerializeField] private TextMeshProUGUI reloadNotifText;
     [SerializeField] private Gun currentGun;
-    
+
+
+    private void Start()
+    {
+        if (currentGun == null)
+        {
+            currentGun = FindAnyObjectByType<Gun>();
+        }
+    }
     void Update()
     {
         if(PauseMenu.GameIsPaused)
