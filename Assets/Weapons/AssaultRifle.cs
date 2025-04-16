@@ -2,8 +2,6 @@ using System.Collections;
 using UnityEngine;
 using static UnityEngine.UI.Image;
 using UnityEngine.InputSystem;
-using UnityEditor.Rendering.LookDev;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class AssaultRifle : Gun
 {
