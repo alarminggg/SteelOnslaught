@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Spawner : MonoBehaviour
 {
@@ -8,6 +9,10 @@ public class Spawner : MonoBehaviour
     public int enemySpawnAmount = 0;
     public int enemiesKilled = 0;
 
+    private bool isWaitingForNextWave = false;
+
+    public TextMeshProUGUI waveCounter;
+    public TextMeshProUGUI waveNotif;
 
     public GameObject[] spawners;
     public GameObject enemy;
@@ -31,9 +36,9 @@ public class Spawner : MonoBehaviour
             SpawnEnemy();
         }
 
-        if(enemiesKilled >= enemySpawnAmount)
+        if(enemiesKilled >= enemySpawnAmount && !isWaitingForNextWave)
         {
-            NextWave();
+            StartCoroutine(NextWave());
         }
     }
 
@@ -53,23 +58,67 @@ public class Spawner : MonoBehaviour
     {
         waveNumber = 1;
         enemySpawnAmount = 2;
-        enemiesKilled = 0;
 
-        for (int i = 0;i < enemySpawnAmount;i++)
+        UpdateWaveUI();
+
+        StartCoroutine(ShowWaveNotificationBeforeSpawning());
+    }
+
+    private IEnumerator ShowWaveNotificationBeforeSpawning()
+    {
+        
+        waveNotif.text = "WAVE " + waveNumber;
+        waveNotif.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2f); 
+        waveNotif.gameObject.SetActive(false); 
+
+        
+        for (int i = 0; i < enemySpawnAmount; i++)
         {
             SpawnEnemy();
         }
     }
 
-    public void NextWave()
+
+
+    private IEnumerator NextWave()
     {
+        float delay = waveNumber >= 20 ? 3f : 5f;
+
+        isWaitingForNextWave = true;
+
         waveNumber++;
+
+        if (waveNotif != null)
+        {
+            waveNotif.text = "WAVE " + waveNumber;
+            waveNotif.gameObject.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(delay);
+
+        waveNotif.gameObject.SetActive(false);
+
+        
         enemySpawnAmount += 2;
         enemiesKilled = 0;
 
+        UpdateWaveUI();
+
+        
         for (int i = 0; i < enemySpawnAmount; i++)
         {
             SpawnEnemy();
+        }
+
+        isWaitingForNextWave = false; 
+    }
+
+    private void UpdateWaveUI()
+    {
+        if (waveCounter  != null)
+        {
+            waveCounter.text = "Wave: " + waveNumber;
         }
     }
 }
