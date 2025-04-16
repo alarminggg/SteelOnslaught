@@ -8,6 +8,10 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] public float attackRange = 2f;
     [SerializeField] public float damage = 20f;
     [SerializeField] public float attackCooldown = 1.5f;
+    [SerializeField] private float attackWindupDelay = 1f;
+
+    private bool isWindingUp = false;
+    private float windUpStartTime = 0f;
 
     private float lastAttackTime = 0f;
 
@@ -54,15 +58,30 @@ public class EnemyMovement : MonoBehaviour
 
         float distance = Vector3.Distance(transform.position, target.position);
 
-        if(distance <= attackRange && Time.time > lastAttackTime + attackCooldown)
+        if (distance <= attackRange)
         {
-            PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            if (!isWindingUp && Time.time > lastAttackTime + attackCooldown)
             {
-                playerHealth.TakeDamage(damage);
-                lastAttackTime = Time.time;
-                Debug.Log("Enemy Hit the Player!");
+                isWindingUp = true;
+                windUpStartTime = Time.time;
             }
+
+            if (isWindingUp && Time.time >= windUpStartTime + attackWindupDelay)
+            {
+                PlayerHealth playerHealth = target.GetComponent<PlayerHealth>();
+                if (playerHealth != null)
+                {
+                    playerHealth.TakeDamage(damage);
+                    Debug.Log("Enemy Hit the Player!");
+                }
+
+                lastAttackTime = Time.time;
+                isWindingUp = false;
+            }
+        }
+        else
+        {
+            isWindingUp = false;
         }
     }
 

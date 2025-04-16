@@ -8,11 +8,13 @@ public class Spawner : MonoBehaviour
     private int waveNumber = 0;
     public int enemySpawnAmount = 0;
     public int enemiesKilled = 0;
+    public int totalKills;
 
     private bool isWaitingForNextWave = false;
 
     public TextMeshProUGUI waveCounter;
     public TextMeshProUGUI waveNotif;
+    public TextMeshProUGUI killsText;
 
     public GameObject[] spawners;
     public GameObject enemy;
@@ -36,6 +38,11 @@ public class Spawner : MonoBehaviour
             SpawnEnemy();
         }
 
+        if(killsText != null)
+        {
+            killsText.text = "Kills: " + totalKills;
+        }
+
         if(enemiesKilled >= enemySpawnAmount && !isWaitingForNextWave)
         {
             StartCoroutine(NextWave());
@@ -57,7 +64,7 @@ public class Spawner : MonoBehaviour
     private void StartWave()
     {
         waveNumber = 1;
-        enemySpawnAmount = 2;
+        enemySpawnAmount = 10;
 
         UpdateWaveUI();
 

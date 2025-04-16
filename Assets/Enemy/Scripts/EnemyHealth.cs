@@ -31,7 +31,8 @@ public class EnemyHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("Enemy has died");
-        Destroy(gameObject);
         spawner.enemiesKilled++;
+        Destroy(gameObject);
+        spawner.totalKills++;
     }
 }
