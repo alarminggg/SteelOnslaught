@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject InGameUI;
 
+    public GameObject SettingsPanel;
+
     private bool isDead = false;
 
     private PlayerLocomotionInput playerLocomotionInput;
@@ -75,6 +77,8 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+
+
     public void LoadMenu()
     {
         Time.timeScale = 1f;
@@ -122,7 +126,24 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    
+    public void OpenSettings()
+    {
+        if(SettingsPanel != null)
+        {
+            SettingsPanel.SetActive(true);
+            
+        }
+    }
+
+    public void CloseSettings()
+    {
+        if (SettingsPanel != null)
+        {
+            SettingsPanel.SetActive(false);
+            
+        }
+    }
+
     private void EnablePlayerInputs()
     {
         if (playerLocomotionInput != null)
