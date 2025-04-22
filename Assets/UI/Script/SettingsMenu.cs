@@ -1,8 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
+using System.Collections.Generic;
+using TMPro;
 
 public class SettingsMenu : MonoBehaviour
 {
+    public AudioMixer audioMixer;
+
+    Resolution[] resolutions;
+
+    public TMP_Dropdown resolutionDropdown;
+
     [Header("Buttons")]
     [SerializeField] private Button cameraButton;
     [SerializeField] private Button videoButton;
@@ -23,7 +32,21 @@ public class SettingsMenu : MonoBehaviour
         controlsButton.onClick.AddListener(() => ShowPanel(controlsPanel));
         
         ShowPanel(cameraPanel);
+
+        resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
+        List<string> options = new List<string>();
+
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + "x" + resolutions[i].height;
+            options.Add(option);
+        }
+
+        resolutionDropdown.AddOptions(options);
     }
+
+    
 
     private void ShowPanel(GameObject panelToShow)
     {
@@ -34,5 +57,14 @@ public class SettingsMenu : MonoBehaviour
 
         panelToShow.SetActive(true);
     }
-    
+
+    public void SetVolume(float volume)
+    {
+        audioMixer.SetFloat("volume", volume);
+    }
+
+    public void SetFullScreen(bool isFullScreen)
+    {
+        Screen.fullScreen = isFullScreen;
+    }
 }
