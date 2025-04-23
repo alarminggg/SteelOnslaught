@@ -1,5 +1,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.Android;
+
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,27 +14,32 @@ public class PauseMenu : MonoBehaviour
     public GameObject InGameUI;
 
     public GameObject SettingsPanel;
+    public GameObject cameraButton;
+    public GameObject resumeButton;
+    public GameObject retryButton;
 
     private bool isDead = false;
 
     private PlayerLocomotionInput playerLocomotionInput;
-    private PlayerController playerController;
-    private AssaultRifle playerGun; 
-
     
+    private PlayerController playerController;
+    private AssaultRifle playerGun;
+
     private void Awake()
     {
         playerLocomotionInput = FindAnyObjectByType<PlayerLocomotionInput>();
+        
         playerController = FindAnyObjectByType<PlayerController>();
-        playerGun = FindAnyObjectByType<AssaultRifle>(); 
+        playerGun = FindAnyObjectByType<AssaultRifle>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(isDead) return;
+        if(isDead || playerLocomotionInput == null) return;
         {
-            if (Input.GetKeyUp(KeyCode.P))
+            if (playerLocomotionInput.PausePressed)
             {
                 if (GameIsPaused)
                 {
@@ -40,6 +49,7 @@ public class PauseMenu : MonoBehaviour
                 {
                     Pause();
                 }
+               
             }
         }
         
@@ -55,11 +65,16 @@ public class PauseMenu : MonoBehaviour
 
         EnablePlayerInputs();
 
+        EventSystem.current.SetSelectedGameObject(null);
+        
+
         if (InGameUI != null)
         {
             InGameUI.SetActive(true);
         }
     }
+
+    
 
     void Pause()
     {
@@ -71,10 +86,16 @@ public class PauseMenu : MonoBehaviour
 
         DisablePlayerInputs();
 
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
+        
+
         if (InGameUI != null)
         {
             InGameUI.SetActive(false);
         }
+
+        
     }
 
 
@@ -133,6 +154,12 @@ public class PauseMenu : MonoBehaviour
             SettingsPanel.SetActive(true);
             
         }
+        if(pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(false);
+        }
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(cameraButton.gameObject);
     }
 
     public void CloseSettings()
@@ -142,7 +169,15 @@ public class PauseMenu : MonoBehaviour
             SettingsPanel.SetActive(false);
             
         }
+        if(pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(true);
+        }
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(resumeButton.gameObject);
     }
+
+    
 
     private void EnablePlayerInputs()
     {
@@ -178,6 +213,9 @@ public class PauseMenu : MonoBehaviour
         }
 
         DisablePlayerInputs();
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(retryButton.gameObject);
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

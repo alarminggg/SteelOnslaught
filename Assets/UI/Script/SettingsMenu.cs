@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class SettingsMenu : MonoBehaviour
@@ -11,6 +12,8 @@ public class SettingsMenu : MonoBehaviour
     Resolution[] resolutions;
 
     public TMP_Dropdown resolutionDropdown;
+
+    private PlayerUINavigation playerUINavigation;
 
     [Header("Buttons")]
     [SerializeField] private Button cameraButton;
@@ -23,6 +26,11 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private GameObject videoPanel;
     [SerializeField] private GameObject audioPanel;
     [SerializeField] private GameObject controlsPanel;
+
+    private void Awake()
+    {
+        playerUINavigation = FindAnyObjectByType<PlayerUINavigation>();
+    }
 
     void Start()
     {

@@ -778,9 +778,9 @@ GameObject:
   - component: {fileID: 3286153447250940888}
   - component: {fileID: 5823330413829349428}
   - component: {fileID: 1008417234428576725}
-  - component: {fileID: 1656034329467109337}
   - component: {fileID: 3335967314701136750}
   - component: {fileID: 3165062572411322063}
+  - component: {fileID: 1381402938987589565}
   m_Layer: 0
   m_Name: Enemy_Tutorial
   m_TagString: Enemy
@@ -866,21 +866,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4532114381992970796}
   m_Mesh: {fileID: -8545447256379345787, guid: 8626fde89fb75014f828690077e80ac0, type: 3}
---- !u!114 &1656034329467109337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4532114381992970796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7474343bc03ed944eab24e51345cad8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 100
-  healthBar: {fileID: 4597650963156120538}
-  spawner: {fileID: 0}
 --- !u!64 &3335967314701136750
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -919,6 +904,21 @@ MonoBehaviour:
   attackRange: 2
   damage: 20
   attackCooldown: 1.5
+--- !u!114 &1381402938987589565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4532114381992970796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87dfb5b221162994baef03425f076729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  spawnerTutorial: {fileID: 0}
+  spawnIndex: 0
 --- !u!1 &4815246600406241668
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
     public bool JumpPressed { get; private set; }
     public bool ShootPressed { get; private set; }
     public bool ReloadPressed { get; private set; }
+    public bool PausePressed { get; private set; }
 
     private void OnEnable()
     {
@@ -83,4 +84,18 @@ public class PlayerLocomotionInput : MonoBehaviour, PlayerControls.IPlayerLocomo
 
         }
     }
+
+    public void OnPauseGame(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            PausePressed = true;
+        }
+        else
+        {
+            PausePressed = false;
+        }
+    }
+
+    
 }
