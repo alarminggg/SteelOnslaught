@@ -3,7 +3,9 @@ using UnityEngine.UI;
 using UnityEngine.Audio;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -14,6 +16,11 @@ public class SettingsMenu : MonoBehaviour
     public TMP_Dropdown resolutionDropdown;
 
     private PlayerUINavigation playerUINavigation;
+    public Camera playerCamera;
+    public Slider fovSlider;
+    public TMP_Text fovValueText;
+
+    
 
     [Header("Buttons")]
     [SerializeField] private Button cameraButton;
@@ -41,17 +48,36 @@ public class SettingsMenu : MonoBehaviour
         
         ShowPanel(cameraPanel);
 
+        ///resolution
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
         List<string> options = new List<string>();
+
+        int currentResolutionIndex = 0;
 
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
             options.Add(option);
+
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
         }
 
         resolutionDropdown.AddOptions(options);
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
+
+        ///FOV
+        fovSlider.minValue = 60f;
+        fovSlider.maxValue = 110f;
+        fovSlider.value = playerCamera.fieldOfView;
+        SetFOV(fovSlider.value);
+        
+        ///Motion Blur
+ 
     }
 
     
@@ -66,6 +92,12 @@ public class SettingsMenu : MonoBehaviour
         panelToShow.SetActive(true);
     }
 
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = resolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
+
     public void SetVolume(float volume)
     {
         audioMixer.SetFloat("volume", volume);
@@ -75,4 +107,18 @@ public class SettingsMenu : MonoBehaviour
     {
         Screen.fullScreen = isFullScreen;
     }
+
+    public void SetFOV(float newFov)
+    {
+        if(playerCamera != null)
+        {
+            playerCamera.fieldOfView = newFov;
+        }
+        if(fovValueText != null)
+        {
+            fovValueText.text = Mathf.RoundToInt(newFov).ToString();
+        }
+    }
+
+    
 }
