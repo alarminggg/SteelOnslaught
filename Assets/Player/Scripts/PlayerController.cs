@@ -48,6 +48,11 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.visible = false;
         _playerLocomotionInput = GetComponent<PlayerLocomotionInput>();
+
+        lookSensH = PlayerPrefs.GetFloat("MouseSensH", lookSensH);
+        lookSensV = PlayerPrefs.GetFloat("MouseSensV", lookSensV);
+        controllerLookSensH = PlayerPrefs.GetFloat("ControllerSensH", controllerLookSensH);
+        controllerLookSensV = PlayerPrefs.GetFloat("ControllerSensV", controllerLookSensV);
     }
 
     private void Update()
