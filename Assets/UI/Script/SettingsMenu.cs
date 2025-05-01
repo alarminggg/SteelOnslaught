@@ -223,15 +223,7 @@ public class SettingsMenu : MonoBehaviour
             PlayerPrefs.SetInt("MotionBlur", isEnabled  ? 1 : 0);
             PlayerPrefs.Save();
 
-            UpdatePostProcessing();
-        }
-    }
-
-    private void UpdatePostProcessing()
-    {
-        if (postProcessingVolume != null && postProcessingVolume != null)
-        {
-            postProcessingVolume = postProcessingVolume;
+            
         }
     }
 

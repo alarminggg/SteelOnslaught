@@ -336,74 +336,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""PlayerUINavigation"",
-            ""id"": ""0ce846d3-e360-4f1a-b572-0ad2d75e8459"",
-            ""actions"": [
-                {
-                    ""name"": ""Navigate"",
-                    ""type"": ""Value"",
-                    ""id"": ""4bb9c487-438d-42a0-83bd-f77caf6fee12"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Select"",
-                    ""type"": ""Button"",
-                    ""id"": ""a3b079ac-bdb5-44a6-ba29-c359ed3137f5"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Back"",
-                    ""type"": ""Button"",
-                    ""id"": ""5e8fb51e-0ccd-4e40-a5e6-e26a9b404b45"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""c723211a-699f-40bb-a33c-8c1e7573e9bd"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Navigate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3b0fce08-4a86-4a06-9fb2-c3e6398de6cf"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Select"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6bb2e30e-dda6-41f4-809a-a6e5a661956e"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Back"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": []
@@ -417,17 +349,11 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_PlayerLocomotionMap_Shoot = m_PlayerLocomotionMap.FindAction("Shoot", throwIfNotFound: true);
         m_PlayerLocomotionMap_Reload = m_PlayerLocomotionMap.FindAction("Reload", throwIfNotFound: true);
         m_PlayerLocomotionMap_PauseGame = m_PlayerLocomotionMap.FindAction("PauseGame", throwIfNotFound: true);
-        // PlayerUINavigation
-        m_PlayerUINavigation = asset.FindActionMap("PlayerUINavigation", throwIfNotFound: true);
-        m_PlayerUINavigation_Navigate = m_PlayerUINavigation.FindAction("Navigate", throwIfNotFound: true);
-        m_PlayerUINavigation_Select = m_PlayerUINavigation.FindAction("Select", throwIfNotFound: true);
-        m_PlayerUINavigation_Back = m_PlayerUINavigation.FindAction("Back", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
     {
         Debug.Assert(!m_PlayerLocomotionMap.enabled, "This will cause a leak and performance issues, PlayerControls.PlayerLocomotionMap.Disable() has not been called.");
-        Debug.Assert(!m_PlayerUINavigation.enabled, "This will cause a leak and performance issues, PlayerControls.PlayerUINavigation.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -579,68 +505,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public PlayerLocomotionMapActions @PlayerLocomotionMap => new PlayerLocomotionMapActions(this);
-
-    // PlayerUINavigation
-    private readonly InputActionMap m_PlayerUINavigation;
-    private List<IPlayerUINavigationActions> m_PlayerUINavigationActionsCallbackInterfaces = new List<IPlayerUINavigationActions>();
-    private readonly InputAction m_PlayerUINavigation_Navigate;
-    private readonly InputAction m_PlayerUINavigation_Select;
-    private readonly InputAction m_PlayerUINavigation_Back;
-    public struct PlayerUINavigationActions
-    {
-        private @PlayerControls m_Wrapper;
-        public PlayerUINavigationActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Navigate => m_Wrapper.m_PlayerUINavigation_Navigate;
-        public InputAction @Select => m_Wrapper.m_PlayerUINavigation_Select;
-        public InputAction @Back => m_Wrapper.m_PlayerUINavigation_Back;
-        public InputActionMap Get() { return m_Wrapper.m_PlayerUINavigation; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerUINavigationActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerUINavigationActions instance)
-        {
-            if (instance == null || m_Wrapper.m_PlayerUINavigationActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerUINavigationActionsCallbackInterfaces.Add(instance);
-            @Navigate.started += instance.OnNavigate;
-            @Navigate.performed += instance.OnNavigate;
-            @Navigate.canceled += instance.OnNavigate;
-            @Select.started += instance.OnSelect;
-            @Select.performed += instance.OnSelect;
-            @Select.canceled += instance.OnSelect;
-            @Back.started += instance.OnBack;
-            @Back.performed += instance.OnBack;
-            @Back.canceled += instance.OnBack;
-        }
-
-        private void UnregisterCallbacks(IPlayerUINavigationActions instance)
-        {
-            @Navigate.started -= instance.OnNavigate;
-            @Navigate.performed -= instance.OnNavigate;
-            @Navigate.canceled -= instance.OnNavigate;
-            @Select.started -= instance.OnSelect;
-            @Select.performed -= instance.OnSelect;
-            @Select.canceled -= instance.OnSelect;
-            @Back.started -= instance.OnBack;
-            @Back.performed -= instance.OnBack;
-            @Back.canceled -= instance.OnBack;
-        }
-
-        public void RemoveCallbacks(IPlayerUINavigationActions instance)
-        {
-            if (m_Wrapper.m_PlayerUINavigationActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        public void SetCallbacks(IPlayerUINavigationActions instance)
-        {
-            foreach (var item in m_Wrapper.m_PlayerUINavigationActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerUINavigationActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    public PlayerUINavigationActions @PlayerUINavigation => new PlayerUINavigationActions(this);
     public interface IPlayerLocomotionMapActions
     {
         void OnMovement(InputAction.CallbackContext context);
@@ -650,11 +514,5 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
-    }
-    public interface IPlayerUINavigationActions
-    {
-        void OnNavigate(InputAction.CallbackContext context);
-        void OnSelect(InputAction.CallbackContext context);
-        void OnBack(InputAction.CallbackContext context);
     }
 }

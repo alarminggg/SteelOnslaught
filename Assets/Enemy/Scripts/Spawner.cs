@@ -33,11 +33,6 @@ public class Spawner : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.T))
-        {
-            SpawnEnemy();
-        }
-
         if(killsText != null)
         {
             killsText.text = "Kills: " + totalKills;

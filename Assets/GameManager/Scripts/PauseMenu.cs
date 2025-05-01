@@ -17,6 +17,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject resumeButton;
     public GameObject retryButton;
 
+    public GameObject startButton;
+
     private bool isDead = false;
 
     private PlayerLocomotionInput playerLocomotionInput;
